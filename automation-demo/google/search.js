@@ -17,6 +17,20 @@ const search = async (driver, searchTerm) => {
     expect(resultsText.toLowerCase()).toContain(searchTerm.toLowerCase())
 }
 
+const searchTwo = async (driver,searchTerm) => {
+    //this will find and clear the search bar
+    await driver.findElement(By.name('q')).clear()
+
+    //then do the search,sendkeys will input our searchTerm for us in the search bar
+    await driver.findElement(By.name('q')).sendKeys(`${searchTerm}\n`)
+
+    await driver.findElement(By.xpath('//a[text()="Images"][1]')).click()
+
+    let resultsText = await driver.findElement(By.xpath('//h3[contains(text(),"Austin")]')).getText()
+
+   expect(resultsText.toLowerCase()).toContain('austin')
+}
 module.exports = {
-    search
+    search,
+    searchTwo
 }
